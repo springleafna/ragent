@@ -30,12 +30,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * ParagraphChunker 单元测试
- * 不启动 Spring 容器，通过测试子类直接调用 doChunk() 验证分块逻辑。
+ * 不启动 Spring 容器，通过测试子类直接调用 doChunk() 验证分块逻辑
  */
 class ParagraphChunkerTest {
 
     /**
-     * 通过子类暴露 protected doChunk()，同时传入 null/空依赖绕过 Embedding 调用。
+     * 通过子类暴露 protected doChunk()，同时传入 null/空依赖绕过 Embedding 调用
      */
     private static class TestableChunker extends ParagraphChunker {
         TestableChunker() {
@@ -52,8 +52,8 @@ class ParagraphChunkerTest {
     /**
      * 复现 Issue #4 死循环场景：
      * 当段落字符数 < overlapSize 时，原代码中 nextStart 被 clamp 至 chunkStart，
-     * findParagraphIndex 返回同一 paraIndex，导致外层循环无法推进。
-     * 修复后必须在 3 秒内完成。
+     * findParagraphIndex 返回同一 paraIndex，导致外层循环无法推进
+     * 修复后必须在 3 秒内完成
      */
     @Test
     @Timeout(value = 3, unit = TimeUnit.SECONDS)
@@ -73,7 +73,7 @@ class ParagraphChunkerTest {
     }
 
     /**
-     * 正常 overlap：下一个 chunk 应包含上一个 chunk 末尾内容作为上下文。
+     * 正常 overlap：下一个 chunk 应包含上一个 chunk 末尾内容作为上下文
      */
     @Test
     void overlapShouldIncludeTailOfPreviousChunk() {
@@ -104,7 +104,7 @@ class ParagraphChunkerTest {
     }
 
     /**
-     * 多个短段落总长度未超过 chunkSize，应合并为一个 chunk。
+     * 多个短段落总长度未超过 chunkSize，应合并为一个 chunk
      */
     @Test
     void shortParagraphsBelowChunkSizeShouldMergeIntoSingleChunk() {
@@ -124,7 +124,7 @@ class ParagraphChunkerTest {
     }
 
     /**
-     * 单段落超过 chunkSize（无双换行分隔）时，整段作为一个 chunk 输出。
+     * 单段落超过 chunkSize（无双换行分隔）时，整段作为一个 chunk 输出
      */
     @Test
     void singleLargeParagraphShouldProduceOneChunk() {
@@ -141,7 +141,7 @@ class ParagraphChunkerTest {
     }
 
     /**
-     * 空字符串与纯空白字符串均应返回空列表。
+     * 空字符串与纯空白字符串均应返回空列表
      */
     @Test
     void emptyOrBlankTextShouldReturnEmptyList() {
@@ -150,7 +150,7 @@ class ParagraphChunkerTest {
     }
 
     /**
-     * chunk index 应从 0 开始且连续递增。
+     * chunk index 应从 0 开始且连续递增
      */
     @Test
     void chunkIndexShouldBeSequential() {

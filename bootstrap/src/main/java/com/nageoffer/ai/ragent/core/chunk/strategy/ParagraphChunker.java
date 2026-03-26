@@ -99,7 +99,7 @@ public class ParagraphChunker extends AbstractEmbeddingChunker {
                 paraIndex = findParagraphIndex(paragraphs, nextStart);
             } else {
                 // 当前 chunk 长度小于 overlap 时，若按 overlap 回退会导致 nextStart <= chunkStart，
-                // paraIndex 不再前进，外层循环死循环。此时放弃回退，直接推进到下一个未处理段落。
+                // paraIndex 不再前进，外层循环死循环。此时放弃回退，直接推进到下一个未处理段落
                 nextStart = chunkEnd;
                 paraIndex = cursor;
             }
